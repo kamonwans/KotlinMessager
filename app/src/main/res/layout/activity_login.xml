@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#5dc2ed"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_margin="32dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <EditText
+            android:paddingLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
+            android:background="@drawable/round_edittext_regis_login"
+            android:id="@+id/editEmailLogin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+        <EditText
+            android:paddingLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:inputType="textPassword"
+            android:hint="Password"
+            android:background="@drawable/round_edittext_regis_login"
+            android:id="@+id/editPasswordLogin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <Button
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/round_button"
+            android:id="@+id/btnLogin"
+            android:text="Login"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+        <TextView
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            android:id="@+id/tvBackToRegister"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="Back to registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
