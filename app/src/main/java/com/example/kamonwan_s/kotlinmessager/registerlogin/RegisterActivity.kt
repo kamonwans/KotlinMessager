@@ -1,14 +1,15 @@
-package com.example.kamonwan_s.kotlinmessager
+package com.example.kamonwan_s.kotlinmessager.registerlogin
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import com.example.kamonwan_s.kotlinmessager.LatestMessagesActivity
+import com.example.kamonwan_s.kotlinmessager.R
 import com.example.kamonwan_s.kotlinmessager.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -26,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
             performRegister()
         }
         tvAlreadyHaveAnAccount.setOnClickListener {
-            val intent = Intent(this,LoginActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
@@ -109,7 +110,7 @@ class RegisterActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     Log.d("Register","Finally we save the user")
 
-                    val intent = Intent(this,LatestMessagesActivity::class.java)
+                    val intent = Intent(this, LatestMessagesActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
 
