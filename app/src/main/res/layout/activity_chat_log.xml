@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    tools:context=".ChatLogActivity">
+
+    <android.support.v7.widget.RecyclerView
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:background="@android:color/holo_blue_light"
+        android:id="@+id/recyclerViewChatLogMessage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1">
+
+    </android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_marginLeft="8dp"
+            android:background="@android:color/white"
+            android:id="@+id/editMessage"
+            android:hint="Enter Message"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="50dp" />
+        <Button
+            android:textColor="@android:color/white"
+            android:background="@drawable/round_button"
+            android:id="@+id/btnSend"
+            android:text="Send"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp" />
+    </LinearLayout>
+
+</LinearLayout>
