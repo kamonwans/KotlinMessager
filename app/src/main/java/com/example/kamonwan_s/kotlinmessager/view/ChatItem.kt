@@ -30,7 +30,7 @@ class ChatToItem(val text: String,val user: User) : Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.tvMyMessage.text = text
 
-        //load our user image into the star
+        //load our user image into the circle
         val uri = user.profileImageUrl
         val targetImageView = viewHolder.itemView.imageMyUser
         Picasso.get().load(uri).into(targetImageView)

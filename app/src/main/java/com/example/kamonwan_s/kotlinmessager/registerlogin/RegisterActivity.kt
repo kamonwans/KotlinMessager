@@ -23,6 +23,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        supportActionBar?.title = "Register"
         btnRegister.setOnClickListener {
             performRegister()
         }
@@ -50,8 +51,7 @@ class RegisterActivity : AppCompatActivity() {
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,selectedPhotoUri)
             imgSelectPhoto.setImageBitmap(bitmap)
             btnSelectPhoto.alpha = 0f
-//            val bitmapDrawable = BitmapDrawable(bitmap)
-//            btnSelectPhoto.setBackgroundDrawable(bitmapDrawable)
+
         }
     }
 

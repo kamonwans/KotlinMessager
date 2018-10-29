@@ -1,7 +1,7 @@
 package com.example.kamonwan_s.kotlinmessager.messages
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.kamonwan_s.kotlinmessager.R
 import com.example.kamonwan_s.kotlinmessager.model.ChatMessage
@@ -13,13 +13,9 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_chat_log.*
-import kotlinx.android.synthetic.main.chat_from_row.view.*
-import kotlinx.android.synthetic.main.chat_to_row.view.*
 
 class ChatLogActivity : AppCompatActivity() {
 
@@ -34,12 +30,9 @@ class ChatLogActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chat_log)
 
         recyclerViewChatLogMessage.adapter = adapter
-        //val username = intent.getStringExtra(NewMessageActivity.USER_KEY)
         toUser = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
 
         supportActionBar?.title = toUser?.username
-
-       // setUpDummyData()
 
         listenForMessage()
         btnSend.setOnClickListener {
@@ -77,10 +70,8 @@ class ChatLogActivity : AppCompatActivity() {
                         adapter.add(ChatToItem(chatMessage.text, toUser!!))
                     }
                 }
-
                 recyclerViewChatLogMessage.scrollToPosition(adapter.itemCount - 1)
             }
-
             override fun onChildRemoved(p0: DataSnapshot) {
             }
 

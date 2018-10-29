@@ -1,14 +1,13 @@
 package com.example.kamonwan_s.kotlinmessager.messages
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.example.kamonwan_s.kotlinmessager.R
-import com.example.kamonwan_s.kotlinmessager.messages.NewMessageActivity.Companion.USER_KEY
 import com.example.kamonwan_s.kotlinmessager.model.ChatMessage
 import com.example.kamonwan_s.kotlinmessager.model.User
 import com.example.kamonwan_s.kotlinmessager.registerlogin.RegisterActivity
@@ -31,9 +30,9 @@ class LatestMessagesActivity : AppCompatActivity() {
         recyclerViewLatestMessage.adapter = adapter
         recyclerViewLatestMessage.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
 
+        supportActionBar?.title = "My Message"
 
         //set item click
-
         adapter.setOnItemClickListener { item, view ->
             Log.d(TAG,"123")
             val intent = Intent(this,ChatLogActivity::class.java)
@@ -41,10 +40,10 @@ class LatestMessagesActivity : AppCompatActivity() {
             //we are missing the chat partner user
            val row = item as LatestMessageRow
 
-            intent.putExtra(NewMessageActivity.USER_KEY,row.chatParnerUser)
+            intent.putExtra(NewMessageActivity.USER_KEY,row.chatPartnerUser)
             startActivity(intent)
         }
-        //setUpDummyRows()
+
         listenForLatestMessages()
         fetchCurrentUser()
         verifyUserIsLoggedIn()
@@ -92,10 +91,7 @@ class LatestMessagesActivity : AppCompatActivity() {
         })
     }
 
-
-
     val adapter = GroupAdapter<ViewHolder>()
-
 
     private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid
@@ -109,10 +105,10 @@ class LatestMessagesActivity : AppCompatActivity() {
                 currentUser = p0.getValue(User::class.java)
                 Log.d("LatestMessage","Current user ${currentUser?.profileImageUrl}")
             }
-
         })
     }
 
+    // check user login if null to regis user
     private fun verifyUserIsLoggedIn() {
         val uid = FirebaseAuth.getInstance().uid
         if (uid == null){

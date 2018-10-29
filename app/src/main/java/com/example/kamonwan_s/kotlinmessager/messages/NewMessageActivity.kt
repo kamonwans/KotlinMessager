@@ -24,7 +24,6 @@ class NewMessageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_message)
 
         supportActionBar?.title = "Select User"
-
         fetchUsers()
 
     }
@@ -38,7 +37,6 @@ class NewMessageActivity : AppCompatActivity() {
             override fun onCancelled(p0: DatabaseError) {
 
             }
-
             override fun onDataChange(p0: DataSnapshot) {
                 val adapter = GroupAdapter<ViewHolder>()
                 p0.children.forEach {
@@ -52,7 +50,6 @@ class NewMessageActivity : AppCompatActivity() {
                 adapter.setOnItemClickListener { item, view ->
                     val userItem = item as UserItem
                     val intent = Intent(view.context, ChatLogActivity::class.java)
-                    //intent.putExtra(USER_KEY,item.user.username)
                     intent.putExtra(USER_KEY,userItem.user)
                     startActivity(intent)
                 }
@@ -75,8 +72,3 @@ class UserItem(val user: User) : Item<ViewHolder>() {
         return R.layout.user_row_new_message
     }
 }
-//class CustomAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>{
-//    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//    }
-//}
