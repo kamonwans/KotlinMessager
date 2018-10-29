@@ -50,7 +50,9 @@ class ChatLogActivity : AppCompatActivity() {
     }
 
     private fun listenForMessage() {
-        val ref = FirebaseDatabase.getInstance().getReference("/messages")
+        val fromId =FirebaseAuth.getInstance().uid
+        val toId = toUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
 
         ref.addChildEventListener(object :ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
@@ -83,7 +85,6 @@ class ChatLogActivity : AppCompatActivity() {
         })
     }
 
-
     private fun performSendMessage() {
 
         val text = editMessage.text.toString()
@@ -92,22 +93,20 @@ class ChatLogActivity : AppCompatActivity() {
         val toId = user.uid
 
         if (fromId == null)return
-        val referent = FirebaseDatabase.getInstance().getReference("/messages").push()
+//        val referent = FirebaseDatabase.getInstance().getReference("/messages").push()
+        val referent = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+        val toReferent = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
+
         val chatMessage = ChatMessage(referent.key!!,text,fromId!!,toId,System.currentTimeMillis()/1000)
         referent.setValue(chatMessage)
                 .addOnSuccessListener {
                     Log.d(TAG,"Saved our chat message : ${referent.key}")
+                    editMessage.text.clear()
+                    recyclerViewChatLogMessage.scrollToPosition(adapter.itemCount - 1)
                 }
+        toReferent.setValue(chatMessage)
 
     }
-
-//    private fun setUpDummyData() {
-//        val adapter = GroupAdapter<ViewHolder>()
-//        adapter.add(ChatFromItem("FROM MESSAGES"))
-//        adapter.add(ChatToItem("FROM MESSAGES \n FROM MESSAGES \n FROM MESSAGES"))
-//
-//        recyclerViewChatLogMessage.adapter = adapter
-//    }
 }
 
 class ChatFromItem(val text :String,val user:User) : Item<ViewHolder>() {
