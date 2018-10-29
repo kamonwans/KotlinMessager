@@ -1,11 +1,10 @@
-package com.example.kamonwan_s.kotlinmessager
+package com.example.kamonwan_s.kotlinmessager.messages
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
+import com.example.kamonwan_s.kotlinmessager.R
 import com.example.kamonwan_s.kotlinmessager.model.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,13 +24,6 @@ class NewMessageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_message)
 
         supportActionBar?.title = "Select User"
-
-//        val adapter = GroupAdapter<ViewHolder>()
-//        adapter.add(UserItem())
-//        adapter.add(UserItem())
-//        adapter.add(UserItem())
-//
-//        recyclerViewNewMessage.adapter = adapter
 
         fetchUsers()
 
@@ -59,7 +51,7 @@ class NewMessageActivity : AppCompatActivity() {
                 
                 adapter.setOnItemClickListener { item, view ->
                     val userItem = item as UserItem
-                    val intent = Intent(view.context,ChatLogActivity::class.java)
+                    val intent = Intent(view.context, ChatLogActivity::class.java)
                     //intent.putExtra(USER_KEY,item.user.username)
                     intent.putExtra(USER_KEY,userItem.user)
                     startActivity(intent)

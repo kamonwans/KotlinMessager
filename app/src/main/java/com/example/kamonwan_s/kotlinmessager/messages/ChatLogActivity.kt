@@ -1,12 +1,13 @@
-package com.example.kamonwan_s.kotlinmessager
+package com.example.kamonwan_s.kotlinmessager.messages
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import com.example.kamonwan_s.kotlinmessager.R.id.imageMyUser
+import com.example.kamonwan_s.kotlinmessager.R
 import com.example.kamonwan_s.kotlinmessager.model.ChatMessage
 import com.example.kamonwan_s.kotlinmessager.model.User
+import com.example.kamonwan_s.kotlinmessager.view.ChatFromItem
+import com.example.kamonwan_s.kotlinmessager.view.ChatToItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -19,7 +20,6 @@ import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_chat_log.*
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
-import kotlinx.android.synthetic.main.user_row_new_message.*
 
 class ChatLogActivity : AppCompatActivity() {
 
@@ -70,13 +70,15 @@ class ChatLogActivity : AppCompatActivity() {
                 if (chatMessage != null){
                     Log.d(TAG,chatMessage?.text)
                     if (chatMessage.toId == FirebaseAuth.getInstance().uid){
-                        val currentUser = LatestMessagesActivity.currentUser ?: return
-                        adapter.add(ChatFromItem(chatMessage.text,currentUser!!))
+                        val currentUser = LatestMessagesActivity.currentUser
+                                ?: return
+                        adapter.add(ChatFromItem(chatMessage.text, currentUser!!))
                     }else{
-                        adapter.add(ChatToItem(chatMessage.text,toUser!!))
+                        adapter.add(ChatToItem(chatMessage.text, toUser!!))
                     }
                 }
 
+                recyclerViewChatLogMessage.scrollToPosition(adapter.itemCount - 1)
             }
 
             override fun onChildRemoved(p0: DataSnapshot) {
@@ -86,14 +88,12 @@ class ChatLogActivity : AppCompatActivity() {
     }
 
     private fun performSendMessage() {
-
         val text = editMessage.text.toString()
         val fromId = FirebaseAuth.getInstance().uid
         val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         val toId = user.uid
 
         if (fromId == null)return
-//        val referent = FirebaseDatabase.getInstance().getReference("/messages").push()
         val referent = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
         val toReferent = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
 
@@ -115,32 +115,3 @@ class ChatLogActivity : AppCompatActivity() {
     }
 }
 
-class ChatFromItem(val text :String,val user:User) : Item<ViewHolder>() {
-    override fun getLayout(): Int {
-        return R.layout.chat_from_row
-    }
-
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.tvMessageOther.text = text
-        val uri = user.profileImageUrl
-        val targetImageView = viewHolder.itemView.imageUserOther
-        Picasso.get().load(uri).into(targetImageView)
-    }
-
-}
-
-class ChatToItem(val text: String,val user:User) : Item<ViewHolder>() {
-    override fun getLayout(): Int {
-        return R.layout.chat_to_row
-    }
-
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.tvMyMessage.text = text
-
-        //load our user image into the star
-        val uri = user.profileImageUrl
-        val targetImageView = viewHolder.itemView.imageMyUser
-        Picasso.get().load(uri).into(targetImageView)
-    }
-
-}

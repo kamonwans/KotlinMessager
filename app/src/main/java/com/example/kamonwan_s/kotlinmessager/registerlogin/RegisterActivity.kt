@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
-import com.example.kamonwan_s.kotlinmessager.LatestMessagesActivity
+import com.example.kamonwan_s.kotlinmessager.messages.LatestMessagesActivity
 import com.example.kamonwan_s.kotlinmessager.R
 import com.example.kamonwan_s.kotlinmessager.model.User
 import com.google.firebase.auth.FirebaseAuth

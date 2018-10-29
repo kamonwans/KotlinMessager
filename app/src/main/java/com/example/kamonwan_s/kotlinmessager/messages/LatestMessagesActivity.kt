@@ -1,32 +1,49 @@
-package com.example.kamonwan_s.kotlinmessager
+package com.example.kamonwan_s.kotlinmessager.messages
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.example.kamonwan_s.kotlinmessager.R
+import com.example.kamonwan_s.kotlinmessager.messages.NewMessageActivity.Companion.USER_KEY
 import com.example.kamonwan_s.kotlinmessager.model.ChatMessage
 import com.example.kamonwan_s.kotlinmessager.model.User
 import com.example.kamonwan_s.kotlinmessager.registerlogin.RegisterActivity
+import com.example.kamonwan_s.kotlinmessager.view.LatestMessageRow
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_latest_messages.*
-import kotlinx.android.synthetic.main.latest_message_row.view.*
 
 class LatestMessagesActivity : AppCompatActivity() {
 
     companion object {
         var currentUser : User? = null
+        var TAG ="LatestMessagesActivity"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_latest_messages)
         recyclerViewLatestMessage.adapter = adapter
+        recyclerViewLatestMessage.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
 
+
+        //set item click
+
+        adapter.setOnItemClickListener { item, view ->
+            Log.d(TAG,"123")
+            val intent = Intent(this,ChatLogActivity::class.java)
+
+            //we are missing the chat partner user
+           val row = item as LatestMessageRow
+
+            intent.putExtra(NewMessageActivity.USER_KEY,row.chatParnerUser)
+            startActivity(intent)
+        }
         //setUpDummyRows()
         listenForLatestMessages()
         fetchCurrentUser()
@@ -79,25 +96,6 @@ class LatestMessagesActivity : AppCompatActivity() {
 
     val adapter = GroupAdapter<ViewHolder>()
 
-//    private fun setUpDummyRows() {
-//        adapter.add(LatestMessageRow())
-//        adapter.add(LatestMessageRow())
-//        adapter.add(LatestMessageRow())
-//        adapter.add(LatestMessageRow())
-//
-//    }
-
-    class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>(){
-        override fun getLayout(): Int {
-            return  R.layout.latest_message_row
-        }
-
-        override fun bind(viewHolder: ViewHolder, position: Int) {
-
-            viewHolder.itemView.tvMessageLatest.text = chatMessage.text
-        }
-
-    }
 
     private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid
@@ -127,7 +125,7 @@ class LatestMessagesActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.menu_new_message ->{
-                val intent = Intent(this,NewMessageActivity::class.java)
+                val intent = Intent(this, NewMessageActivity::class.java)
                 startActivity(intent)
             }
             R.id.menu_sign_out -> {
