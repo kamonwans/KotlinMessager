@@ -74,7 +74,6 @@ class ChatLogActivity : AppCompatActivity() {
             }
             override fun onChildRemoved(p0: DataSnapshot) {
             }
-
         })
     }
 
@@ -93,6 +92,7 @@ class ChatLogActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     Log.d(TAG,"Saved our chat message : ${referent.key}")
                     editMessage.text.clear()
+                    // ให้เลื่อนขึ้นแสดงตัวสุดท้าย
                     recyclerViewChatLogMessage.scrollToPosition(adapter.itemCount - 1)
                 }
         toReferent.setValue(chatMessage)
